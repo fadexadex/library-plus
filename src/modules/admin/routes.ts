@@ -53,4 +53,6 @@ router.patch(
   adminController.updateBorrowRequestStatus
 );
 
+router.get("/notifications", generalController.getNotifications);
+
 export default router;

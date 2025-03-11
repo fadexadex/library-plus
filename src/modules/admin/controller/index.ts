@@ -84,7 +84,11 @@ export class AdminController {
     try {
       const { id } = req.params;
       const { status, rejectionReason } = req.body;
-      const updatedRequest = await adminService.updateBorrowRequest(id, status, rejectionReason);
+      const updatedRequest = await adminService.updateBorrowRequest(
+        id,
+        status,
+        rejectionReason
+      );
 
       setImmediate(async () => {
         const requestLink = `${process.env.BASE_URL}/user/borrow-requests/${id}`;
@@ -94,9 +98,17 @@ export class AdminController {
           status,
           requestLink
         );
-        await generalService.createUpdateBorrowRequestNotifications(updatedRequest, status);
+        await generalService.createUpdateBorrowRequestNotifications(
+          updatedRequest,
+          status
+        );
+        await generalService.logActivity(
+          updatedRequest.userId,
+          updatedRequest.bookId,
+          `Borrow request ${status.toLowerCase()}`
+        );
       });
-      
+
       res
         .status(StatusCodes.OK)
         .json({ message: "Borrow request updated successfully" });

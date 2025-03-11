@@ -8,5 +8,11 @@ export class UserService {
     return await userRepo.borrowBook(userId, bookId);
   }
 
+  async getBorrowRequests(userId: string) {
+    return await userRepo.getBorrowRequests(userId);
+  }
 
+  async getBorrowRequest(userId: string, id: string) {
+    return await userRepo.getBorrowRequest(userId, id);
+  }
 }

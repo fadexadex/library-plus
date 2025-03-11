@@ -23,6 +23,34 @@ export class UserRepository {
     });
   }
 
- 
+  async getBorrowRequests(userId: string) {
+    return prisma.borrowedBook.findMany({
+      where: {
+        userId,
+      },
+      include: {
+        book: {
+          select: {
+            title: true,
+          },
+        },
+      },
+    });
+  }
 
+  async getBorrowRequest(userId: string, id: string) {
+    return prisma.borrowedBook.findFirst({
+      where: {
+        userId,
+        borrowId: id,
+      },
+      include: {
+        book: {
+          select: {
+            title: true,
+          },
+        },
+      },
+    });
+  }
 }

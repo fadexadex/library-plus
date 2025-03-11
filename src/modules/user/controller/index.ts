@@ -25,6 +25,11 @@ export class UserController {
             url
           );
           await generalService.createBorrowRequestNotifications(borrowedBook);
+          await generalService.logActivity(
+            userId,
+            borrowedBook.bookId,
+            "Borrow request submitted"
+          );
         } catch (error) {
           console.error("Failed to send notifications:", error);
         }
@@ -46,4 +51,33 @@ export class UserController {
       next(error);
     }
   }
+
+  async getBorrowRequests(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { userId } = req.user;
+      const borrowRequests = await userService.getBorrowRequests(userId);
+
+      res.status(StatusCodes.OK).json(borrowRequests);
+    } catch (error) {
+      next(error);
+    }
+  }
+  async getBorrowRequest(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { userId } = req.user;
+      const { id } = req.params;
+      const borrowRequest = await userService.getBorrowRequest(userId, id);
+
+      if (!borrowRequest) {
+        return res.status(StatusCodes.NOT_FOUND).json({
+          message: "Borrow request not found",
+        });
+      }
+
+      res.status(StatusCodes.OK).json(borrowRequest);
+    } catch (error) {
+      next(error);
+    }
+  }
+  
 }

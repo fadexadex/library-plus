@@ -41,4 +41,12 @@ export class GeneralService {
       status
     );
   }
+
+  async logActivity(userId: string, bookId: string, action: string) {
+    return await generalRepo.logActivity(userId, bookId, action);
+  }
+
+  async getNotfications(userId: string) {
+    return await generalRepo.getNotfications(userId);
+  }
 }

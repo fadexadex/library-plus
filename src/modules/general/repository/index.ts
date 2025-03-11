@@ -89,4 +89,41 @@ export class GeneralRepository {
       adminMessage
     );
   }
+
+  async logActivity(userId: string, bookId: string, action: string) {
+    return await prisma.recentActivity.create({
+      data: {
+        userId,
+        bookId,
+        action,
+      },
+    });
+  }
+
+  async getUserActivities(userId: string) {
+    return await prisma.recentActivity.findMany({
+      where: { userId },
+      include: {
+        book: {
+          select: {
+            title: true,
+          },
+        },
+      },
+      orderBy: {
+        timestamp: "desc",
+      },
+    });
+  }
+
+  async getNotfications(userId: string) {
+    return await prisma.notification.findMany({
+      where: {
+        userId,
+      },
+      orderBy: {
+        time: "desc",
+      },
+    });
+  }
 }

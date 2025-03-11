@@ -20,12 +20,14 @@ router.post(
   bookValidator.validateId,
   userController.borrowBook
 );
+
 router.get("/borrow-requests", userController.getBorrowRequests);
 router.get(
   "/borrow-requests/:id",
   bookValidator.validateId,
-  // userController.getBorrowRequest
+  userController.getBorrowRequest
 );
 
+router.get("/notifications", generalController.getNotifications);
 
 export default router;

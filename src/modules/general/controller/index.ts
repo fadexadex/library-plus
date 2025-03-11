@@ -31,4 +31,15 @@ export class GeneralController {
       next(error);
     }
   };
+
+  getNotifications = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { userId } = req.user;
+      const notifications = await generalService.getNotfications(userId);
+
+      res.status(StatusCodes.OK).json(notifications);
+    } catch (error) {
+      next(error);
+    }
+  }
 }
