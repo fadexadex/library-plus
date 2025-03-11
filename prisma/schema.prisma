@@ -1,0 +1,119 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  userId    String   @id @default(uuid())
+  email      String   @unique
+  password   String
+  firstName  String
+  lastName   String
+  role       Role     @default(CUSTOMER)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  borrowedBooks    BorrowedBook[]
+  purchases        Purchase[]
+  notifications    Notification[]
+  recentActivities RecentActivity[]
+}
+
+enum Role {
+  ADMIN
+  CUSTOMER
+}
+
+model Book {
+  bookId       String      @id @default(uuid())
+  title        String
+  author       String
+  isbn         String      @unique
+  category     String
+  copies       Int
+  shelf        String
+  price        Decimal
+  coverImage   String
+  description  String
+  stockStatus  StockStatus
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+
+  borrowedBooks    BorrowedBook[]
+  purchases        Purchase[]
+  recentActivities RecentActivity[]
+}
+
+enum StockStatus {
+  IN_STOCK
+  OUT_OF_STOCK
+}
+
+model BorrowedBook {
+  borrowId        String       @id @default(uuid())
+  bookId          String
+  userId          String       
+  status          BorrowStatus @default(PENDING)
+  dueDate         DateTime?
+  borrowDate      DateTime     @default(now())
+  returned        Boolean      @default(false)
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+  rejectionReason String?
+  approvalCode    String?
+
+  book     Book @relation(fields: [bookId], references: [bookId])
+  user     User @relation(fields: [userId], references: [userId])
+
+  @@unique([userId, bookId])
+}
+
+enum BorrowStatus {
+  APPROVED
+  PENDING
+  REJECTED
+  OVERDUE
+}
+
+model Purchase {
+  purchaseId    String   @id @default(uuid())
+  userId        String
+  bookId        String
+  transactionId String?
+  price         Decimal
+  createdAt     DateTime @default(now())
+
+  user  User @relation(fields: [userId], references: [userId])
+  book  Book @relation(fields: [bookId], references: [bookId])
+}
+
+model Notification {
+  notificationId String   @id @default(uuid())
+  userId         String
+  message        String
+  read           Boolean  @default(false)
+  time           DateTime @default(now())
+
+  user  User @relation(fields: [userId], references: [userId])
+}
+
+model RecentActivity {
+  activityId String   @id @default(uuid())
+  userId     String
+  bookId     String
+  action     String
+  timestamp  DateTime @default(now())
+
+  user  User @relation(fields: [userId], references: [userId])
+  book  Book @relation(fields: [bookId], references: [bookId])
+}
