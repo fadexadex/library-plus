@@ -99,6 +99,41 @@ class EmailService {
 
     await this.sendMail(userEmail, subject, undefined, html);
   }
+
+  async notifyAdminsAboutReturnRequest(bookTitle: string, requestLink: string) {
+    const admins = await adminRepo.findAdmins();
+
+    if (!admins.length) {
+      console.log("No admins found to notify.");
+      return;
+    }
+
+    const subject = "New Return Request Notification";
+    const html = `
+      <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+        <h2 style="color: #4CAF50;">New Return Request Notification</h2>
+        <p>Dear Admin,</p>
+        <p>A new return request has been made for the book titled <strong>${bookTitle}</strong>.</p>
+        <p>Please review the request by clicking the link below:</p>
+        <p>
+          <a href="${requestLink}" style="display: inline-block; padding: 10px 20px; margin: 10px 0; font-size: 16px; color: #fff; background-color: #4CAF50; text-decoration: none; border-radius: 5px;">
+            Review Return Request
+          </a>
+        </p>
+        <p>If the button above does not work, you can copy and paste the following link into your browser:</p>
+        <p style="word-break: break-all;">${requestLink}</p>
+        <p>Thank you for your attention.</p>
+        <p>Best regards,</p>
+        <p><strong>Library System</strong></p>
+      </div>
+    `;
+
+    const emailPromises = admins.map((admin) =>
+      this.sendMail(admin.email, subject, undefined, html)
+    );
+
+    return Promise.all(emailPromises);
+  }
 }
 
 export default EmailService;

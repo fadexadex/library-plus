@@ -25,7 +25,7 @@ export class GeneralRepository {
     });
   }
 
-  private async createNotifications(
+  async createNotifications(
     userId: string,
     userMessage: string,
     adminMessage: string
@@ -78,6 +78,7 @@ export class GeneralRepository {
       PENDING: "pending",
       REJECTED: "rejected",
       OVERDUE: "overdue",
+      RETURN_REQUESTED: "return requested",
     }[status];
 
     const userMessage = `Your borrow request for the book "${borrowRequest.book.title}" has been ${statusMessage}.`;

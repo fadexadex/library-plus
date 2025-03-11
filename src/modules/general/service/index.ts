@@ -42,6 +42,19 @@ export class GeneralService {
     );
   }
 
+  async createReturnRequestNotifications(
+    returnRequest: BorrowedBook & { book: { title: string } }
+  ) {
+    const userMessage = `Your return request for the book "${returnRequest.book.title}" has been submitted.`;
+    const adminMessage = `A new return request has been made for the book "${returnRequest.book.title}".`;
+
+    await generalRepo.createNotifications(
+      returnRequest.userId,
+      userMessage,
+      adminMessage
+    );
+  }
+
   async logActivity(userId: string, bookId: string, action: string) {
     return await generalRepo.logActivity(userId, bookId, action);
   }

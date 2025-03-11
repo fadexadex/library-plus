@@ -7,6 +7,9 @@ export class UserService {
   async borrowBook(userId: string, bookId: string) {
     return await userRepo.borrowBook(userId, bookId);
   }
+  async submitReturnRequest(userId: string, bookId: string) {
+    return await userRepo.submitReturnRequest(userId, bookId);
+  }
 
   async getBorrowRequests(userId: string) {
     return await userRepo.getBorrowRequests(userId);

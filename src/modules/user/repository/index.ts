@@ -65,4 +65,40 @@ export class UserRepository {
       },
     });
   }
+  async submitReturnRequest(userId: string, borrowId: string) {
+
+    const borrowRequest = await prisma.borrowedBook.findFirst({
+      where: {
+        userId,
+        borrowId: borrowId,
+      },
+      include: {
+        book: {
+          select: {
+            title: true,
+          },
+        },
+      },
+    });
+
+    if (!borrowRequest)
+      throw new AppError("Borrow request not found", StatusCodes.NOT_FOUND);
+
+    return prisma.borrowedBook.update({
+      where: {
+        borrowId: borrowId,
+      },
+      data: {
+        status: "RETURN_REQUESTED",
+      },
+      include: {
+        book: {
+          select: {
+            title: true,
+          },
+        },
+      },
+    });
+
+  }
 }

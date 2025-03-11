@@ -83,11 +83,12 @@ enum BorrowStatus {
   PENDING
   REJECTED
   OVERDUE
+  RETURN_REQUESTED
 }
 
 model Purchase {
   purchaseId    String   @id @default(uuid())
-  userId        String
+  userId        String 
   bookId        String
   transactionId String?
   price         Decimal

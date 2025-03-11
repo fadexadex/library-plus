@@ -52,6 +52,41 @@ export class UserController {
     }
   }
 
+  async submitReturnRequest(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { userId } = req.user;
+      const { id } = req.params;
+      const url = `${process.env.BASE_URL}/admin/return-requests`;
+
+      const returnRequest = await userService.submitReturnRequest(userId, id);
+
+      setImmediate(async () => {
+        try {
+          await emailService.notifyAdminsAboutReturnRequest(
+            returnRequest.book.title,
+            url
+          );
+          await generalService.createReturnRequestNotifications(returnRequest);
+          await generalService.logActivity(
+            userId,
+            returnRequest.bookId,
+            "Return request submitted"
+          );
+        } catch (error) {
+          console.error("Failed to send notifications:", error);
+        }
+      });
+
+      res.status(StatusCodes.CREATED).json({
+        message:
+          "Book return request submitted successfully, awaiting admin approval",
+      });
+    }
+    catch (error) {
+      next(error);
+    }
+  }
+
   async getBorrowRequests(req: Request, res: Response, next: NextFunction) {
     try {
       const { userId } = req.user;

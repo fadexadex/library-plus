@@ -4,6 +4,7 @@ import { errorHandler } from "./middlewares";
 import authRoutes from "./modules/auth/routes";
 import adminRoutes from "./modules/admin/routes";
 import userRoutes from "./modules/user/routes";
+import genenralRoutes from "./modules/general/routes";
 
 
 dotenv.config();
@@ -28,6 +29,7 @@ export class Server {
   private setUpRoutes() {
     this.apiRouter.use("/auth", authRoutes);
     this.apiRouter.use("/user", userRoutes);
+    this.apiRouter.use("/general", genenralRoutes);
     this.apiRouter.use("/admin", adminRoutes);
     this.app.use("/api/v1", this.apiRouter);
     this.app.use(errorHandler);
