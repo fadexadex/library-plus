@@ -53,4 +53,16 @@ export class UserRepository {
       },
     });
   }
+  async getUserActivities(userId: string) {
+    return prisma.recentActivity.findMany({
+      where: { userId },
+      include: {
+        book: {
+          select: {
+            title: true,
+          },
+        },
+      },
+    });
+  }
 }

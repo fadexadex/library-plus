@@ -116,4 +116,13 @@ export class AdminController {
       next(error);
     }
   };
+
+  getAllActivities = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const activities = await adminService.getAllActivities();
+      res.status(StatusCodes.OK).json(activities);
+    } catch (error) {
+      next(error);
+    }
+  }
 }

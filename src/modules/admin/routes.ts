@@ -55,4 +55,6 @@ router.patch(
 
 router.get("/notifications", generalController.getNotifications);
 
+router.get("/activities", adminController.getAllActivities);
+
 export default router;

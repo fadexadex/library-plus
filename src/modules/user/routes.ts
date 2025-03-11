@@ -13,7 +13,11 @@ const bookValidator = new BookValidator();
 router.use(authGuard);
 
 router.get("/books", generalController.getAllBooks);
-router.get("/books/:id", bookValidator.validateId, generalController.getBookById);
+router.get(
+  "/books/:id",
+  bookValidator.validateId,
+  generalController.getBookById
+);
 
 router.post(
   "/books/:id/borrow",
@@ -29,5 +33,7 @@ router.get(
 );
 
 router.get("/notifications", generalController.getNotifications);
+
+router.get("/activities", userController.getUserActivities);
 
 export default router;

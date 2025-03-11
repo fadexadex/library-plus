@@ -79,5 +79,14 @@ export class UserController {
       next(error);
     }
   }
-  
+  async getUserActivities(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { userId } = req.user;
+      const activities = await userService.getUserActivities(userId);
+
+      res.status(StatusCodes.OK).json(activities);
+    } catch (error) {
+      next(error);
+    }
+  }
 }

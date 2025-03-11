@@ -15,4 +15,8 @@ export class UserService {
   async getBorrowRequest(userId: string, id: string) {
     return await userRepo.getBorrowRequest(userId, id);
   }
+
+  async getUserActivities(userId: string) {
+    return await userRepo.getUserActivities(userId);
+  }
 }

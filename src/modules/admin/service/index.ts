@@ -36,4 +36,8 @@ export class AdminService {
   updateBorrowRequest = async (id: string, status: BorrowStatus, rejectionReason?: string) => {
     return adminRepo.updateBorrowRequestStatus(id, status, rejectionReason);
   }
+
+  getAllActivities = async () => {
+    return adminRepo.getAllActivities()
+  }
 }

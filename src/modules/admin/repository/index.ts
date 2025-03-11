@@ -2,6 +2,12 @@ import { Prisma, BorrowStatus } from "@prisma/client";
 import { prisma } from "../../../utils/db";
 
 export class AdminRepository {
+  private generateApprovalCode(): string {
+    return (
+      Math.random().toString(36).substring(2, 15) +
+      Math.random().toString(36).substring(2, 15)
+    );
+  }
   async createBook(data: Prisma.BookCreateInput) {
     return await prisma.book.create({
       data,
@@ -66,7 +72,11 @@ export class AdminRepository {
     });
   }
 
-  async updateBorrowRequestStatus(borrowId: string, status: BorrowStatus, rejectionReason?: string) {
+  async updateBorrowRequestStatus(
+    borrowId: string,
+    status: BorrowStatus,
+    rejectionReason?: string
+  ) {
     const data: Prisma.BorrowedBookUpdateInput = {
       status,
       rejectionReason: status === "REJECTED" ? rejectionReason : null,
@@ -93,7 +103,21 @@ export class AdminRepository {
     });
   }
 
-  private generateApprovalCode(): string {
-    return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+  getAllActivities() {
+    return prisma.recentActivity.findMany({
+      include: {
+        user: {
+          select: {
+            firstName: true,
+            lastName: true,
+          },
+        },
+        book: {
+          select: {
+            title: true,
+          },
+        },
+      },
+    });
   }
 }
