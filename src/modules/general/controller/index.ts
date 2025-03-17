@@ -8,7 +8,7 @@ export class GeneralController {
   getAllBooks = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const page = Number.parseInt(req.query.page as string) || 1;
-      const limit = Number.parseInt(req.query.limit as string) || 10;
+      const limit = Number.parseInt(req.query.limit as string) || 12;
       const books = await generalService.findAllBooks(page, limit);
       res.status(StatusCodes.OK).json(books);
     } catch (error) {
