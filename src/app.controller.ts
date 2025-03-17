@@ -25,7 +25,7 @@ export class Server {
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
     this.app.use(cors());
-    this.app.use(errorHandler);
+    this.app.use(errorHandler); 
   }
 
   private setUpRoutes() {
