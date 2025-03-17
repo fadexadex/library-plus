@@ -78,12 +78,17 @@ export class GeneralRepository {
       PENDING: "pending",
       REJECTED: "rejected",
       OVERDUE: "overdue",
+      RETURNED: "returned",
       RETURN_REQUESTED: "return requested",
     }[status];
 
-    const userMessage = `Your borrow request for the book "${borrowRequest.book.title}" has been ${statusMessage}.`;
-    const adminMessage = `The borrow request for the book "${borrowRequest.book.title}" has been ${statusMessage}.`;
+    let userMessage = `Your borrow request for the book "${borrowRequest.book.title}" has been ${statusMessage}.`;
+    let adminMessage = `The borrow request for the book "${borrowRequest.book.title}" has been ${statusMessage}.`;
 
+    if (status === "RETURNED") {
+      userMessage = `Your return request for the book "${borrowRequest.book.title}" has been confirmed.`;
+      adminMessage = `The return request for the book "${borrowRequest.book.title}" has been confirmed.`;
+    }
     await this.createNotifications(
       borrowRequest.userId,
       userMessage,

@@ -9,7 +9,6 @@ const router = Router();
 const generalController = new GeneralController();
 const bookValidator = new BookValidator();
 
-router.use(authGuard);
 
 router.get("/books", generalController.getAllBooks);
 router.get(
@@ -18,7 +17,7 @@ router.get(
   generalController.getBookById
 );
 
-router.get("/notifications", generalController.getNotifications);
+router.get("/notifications", authGuard, generalController.getNotifications);
 
 
 export default router;

@@ -1,5 +1,5 @@
-import { AuthController } from "./controller";
 import { Router } from "express";
+import { AuthController } from "./controller";
 import { AuthValidator } from "../../middlewares";
 import { authGuard } from "../../middlewares";
 
@@ -12,7 +12,9 @@ router.post(
   authValidator.validateRegisterBody,
   authController.register
 );
-router.post("/login", authValidator.validateLoginBody, authController.login);
+router.post("/login", authController.login);
+router.post("/admin/login", authController.adminLogin);
+
 router.get("/me", authGuard, authController.getMe);
 
 export default router;

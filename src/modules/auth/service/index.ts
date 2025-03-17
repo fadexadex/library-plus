@@ -9,16 +9,22 @@ import { Prisma } from "@prisma/client";
 const authRepo = new AuthRepository();
 
 export class AuthService {
-  login = async (loginBody: ILoginBody) => {
+  login = async (loginBody: ILoginBody, role?: string) => {
     const { email, password } = loginBody;
     const user = await authRepo.findUserByEmail(email);
     if (!user) {
       throw new AppError("Invalid email or password", StatusCodes.UNAUTHORIZED);
     }
+
     const isPasswordValid = await comparePassword(password, user.password);
     if (!isPasswordValid) {
       throw new AppError("Invalid email or password", StatusCodes.UNAUTHORIZED);
     }
+
+    if (role && user.role !== role) {
+      throw new AppError("Unauthorized access", StatusCodes.FORBIDDEN);
+    }
+
     return sanitizeUserAndGrantToken(user);
   };
 

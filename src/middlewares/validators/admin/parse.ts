@@ -4,3 +4,4 @@ export const parseCopiesAndPrice = (req: Request, res: Response, next: NextFunct
   req.body.price = parseFloat(req.body.price);
   next();
 };
+  

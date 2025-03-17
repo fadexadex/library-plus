@@ -53,6 +53,7 @@ export class UserRepository {
       },
     });
   }
+  
   async getUserActivities(userId: string) {
     return prisma.recentActivity.findMany({
       where: { userId },
@@ -65,6 +66,7 @@ export class UserRepository {
       },
     });
   }
+
   async submitReturnRequest(userId: string, borrowId: string) {
 
     const borrowRequest = await prisma.borrowedBook.findFirst({

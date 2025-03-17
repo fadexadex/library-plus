@@ -81,6 +81,7 @@ export class AdminRepository {
       status,
       rejectionReason: status === "REJECTED" ? rejectionReason : null,
       approvalCode: status === "APPROVED" ? this.generateApprovalCode() : null,
+      returned: status === "RETURNED" ? true : undefined,
     };
 
     return await prisma.borrowedBook.update({

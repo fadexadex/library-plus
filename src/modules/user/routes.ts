@@ -32,7 +32,7 @@ router.get(
   userController.getBorrowRequest
 );
 
-router.post("/books/:id/return", bookValidator.validateId, userController.returnBook);
+router.post("/books/:id/return", bookValidator.validateId, userController.submitReturnRequest);
 
 router.get("/notifications", generalController.getNotifications);
 

@@ -16,8 +16,17 @@ export class AuthController {
 
   login = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const user = await authService.login(req.body);
-      res.status(StatusCodes.OK).json(user);
+      const token = await authService.login(req.body);
+      res.status(StatusCodes.OK).json(token );
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  adminLogin = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const token = await authService.login(req.body, "ADMIN");
+      res.status(StatusCodes.OK).json(token );
     } catch (error) {
       next(error);
     }

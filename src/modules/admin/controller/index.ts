@@ -91,22 +91,34 @@ export class AdminController {
       );
 
       setImmediate(async () => {
-        const requestLink = `${process.env.BASE_URL}/user/borrow-requests/${id}`;
-        await emailService.notifyUserAboutBorrowRequestStatus(
-          updatedRequest.user.email,
-          updatedRequest.book.title,
-          status,
-          requestLink
-        );
-        await generalService.createUpdateBorrowRequestNotifications(
-          updatedRequest,
-          status
-        );
-        await generalService.logActivity(
-          updatedRequest.userId,
-          updatedRequest.bookId,
-          `Borrow request ${status.toLowerCase()}`
-        );
+        if (status === "RETURNED") {
+          await generalService.createUpdateBorrowRequestNotifications(
+            updatedRequest,
+            status
+          );
+          await generalService.logActivity(
+            updatedRequest.userId,
+            updatedRequest.bookId,
+            `return request confirmed ${status.toLowerCase()}`
+          );
+        } else {
+          const requestLink = `${process.env.BASE_URL}/user/borrow-requests/${id}`;
+          await emailService.notifyUserAboutBorrowRequestStatus(
+            updatedRequest.user.email,
+            updatedRequest.book.title,
+            status,
+            requestLink
+          );
+          await generalService.createUpdateBorrowRequestNotifications(
+            updatedRequest,
+            status
+          );
+          await generalService.logActivity(
+            updatedRequest.userId,
+            updatedRequest.bookId,
+            `Borrow request ${status.toLowerCase()}`
+          );
+        }
       });
 
       res
@@ -117,12 +129,16 @@ export class AdminController {
     }
   };
 
-  getAllActivities = async (req: Request, res: Response, next: NextFunction) => {
+  getAllActivities = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
     try {
       const activities = await adminService.getAllActivities();
       res.status(StatusCodes.OK).json(activities);
     } catch (error) {
       next(error);
     }
-  }
+  };
 }
