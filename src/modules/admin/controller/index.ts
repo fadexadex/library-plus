@@ -17,8 +17,10 @@ export class AdminController {
     try {
       req.body.coverImage = await uploadImageToCloudinary(req.file.path);
 
-      const book = await adminService.createBook(req.body);
-      res.status(StatusCodes.CREATED).json(book);
+      await adminService.createBook(req.body);
+      res
+        .status(StatusCodes.CREATED)
+        .json({ message: "Book created Successfully" });
     } catch (error) {
       next(error);
     }
