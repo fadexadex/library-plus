@@ -55,6 +55,10 @@ export class GeneralService {
     );
   }
 
+  async searchBooks(query: string) {
+    return await generalRepo.searchBooks(query);
+  }
+
   async logActivity(userId: string, bookId: string, action: string) {
     return await generalRepo.logActivity(userId, bookId, action);
   }

@@ -42,4 +42,15 @@ export class GeneralController {
       next(error);
     }
   }
+  searchBooks = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const query = req.query.q as string;
+      const books = await generalService.searchBooks(query);
+      res.status(StatusCodes.OK).json({
+        data: books,
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
 }

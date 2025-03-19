@@ -17,6 +17,21 @@ export class GeneralRepository {
     return { books, count };
   }
 
+  searchBooks = async (query: string) => {
+    return await prisma.book.findMany({
+      where: {
+        OR: [
+          { title: { contains: query, mode: "insensitive" } },
+          { description: { contains: query, mode: "insensitive" } },
+          { author: { contains: query, mode: "insensitive" } },
+          { category: { contains: query, mode: "insensitive" } },
+          { isbn: { contains: query, mode: "insensitive" } }, 
+        ],
+      },
+    });
+  };
+  
+
   async findBookById(id: string) {
     return await prisma.book.findUnique({
       where: {

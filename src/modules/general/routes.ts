@@ -17,6 +17,8 @@ router.get(
   generalController.getBookById
 );
 
+router.get("/search", generalController.searchBooks); 
+
 router.get("/notifications", authGuard, generalController.getNotifications);
 
 
