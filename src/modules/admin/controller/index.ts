@@ -26,6 +26,30 @@ export class AdminController {
     }
   };
 
+  updateBook = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { id } = req.params;
+      if (req.file) {
+        req.body.coverImage = await uploadImageToCloudinary(req.file.path);
+      }
+
+      await adminService.updateBook(id, req.body);
+      res.status(StatusCodes.OK).json({ message: "Book updated successfully" });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  deleteBook = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { id } = req.params;
+      await adminService.deleteBook(id);
+      res.status(StatusCodes.OK).json({ message: "Book deleted successfully" });
+    } catch (error) {
+      next(error);
+    }
+  };
+
   batchCreateBooks = async (
     req: Request,
     res: Response,

@@ -14,6 +14,23 @@ export class AdminRepository {
     });
   }
 
+  async updateBook(id: string, data: Prisma.BookUpdateInput) {
+    return await prisma.book.update({
+      where: {
+        bookId: id,
+      },
+      data,
+    });
+  }
+
+  async deleteBook(id: string) {
+    return await prisma.book.delete({ 
+      where: { 
+        bookId: id 
+      } 
+    });
+  }
+
   async batchCreateBooks(data: Prisma.BookCreateInput[]) {
     return await prisma.book.createMany({
       data,

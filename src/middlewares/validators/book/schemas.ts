@@ -18,6 +18,19 @@ export const createBookSchema = Joi.object({
   stockStatus: Joi.string().valid("IN_STOCK", "OUT_OF_STOCK").required(),
 });
 
+export const updateBookSchema = Joi.object({
+  title: Joi.string().optional(),
+  author: Joi.string().optional(),
+  isbn: Joi.string().optional(),
+  category: Joi.string().optional(),
+  copies: Joi.number().integer().optional(),
+  shelf: Joi.string().optional(),
+  price: Joi.number().optional(),
+  coverImage: Joi.string().optional(),
+  description: Joi.string().optional(),
+  stockStatus: Joi.string().valid("IN_STOCK", "OUT_OF_STOCK").optional(),
+});
+
 export const statusSchema = Joi.object({
   status: Joi.string().valid(...Object.values(BorrowStatus)).required(),
   rejectionReason: Joi.string().when('status', {

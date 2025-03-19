@@ -26,6 +26,19 @@ router.post(
   validateFile,
   adminController.createBook
 );
+
+
+router.patch(
+  "/books/:id",
+  uploadImage.single("cover"),
+  parseCopiesAndPrice,
+  bookValidator.validateId,
+  bookValidator.validateUpdateBookBody,
+  adminController.updateBook
+)
+
+router.delete("/books/:id", bookValidator.validateId, adminController.deleteBook);
+
 router.post(
   "/books/batch-create",
   uploadCSV.single("file"),
@@ -33,8 +46,7 @@ router.post(
   adminController.batchCreateBooks
 );
 
-router.get("/books", generalController.getAllBooks);
-router.get("/books/:id", bookValidator.validateId, generalController.getBookById);
+
 
 router.get(
   "/borrow-requests",

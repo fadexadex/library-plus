@@ -1,6 +1,6 @@
 import { AdminRepository } from "../repository";
 import { BorrowStatus, Prisma } from "@prisma/client";
-import fs from 'fs/promises';
+import fs from "fs/promises";
 import Papa from "papaparse";
 import { formatBookData } from "../../../utils/formatBookData";
 
@@ -11,33 +11,46 @@ export class AdminService {
     return adminRepo.createBook(data);
   };
 
+  updateBook = async (id: string, data: Prisma.BookUpdateInput) => {
+    return adminRepo.updateBook(id, data);
+  };
+
+  deleteBook = async (id: string) => {
+    return adminRepo.deleteBook(id);
+  };
+
   batchCreateBooks = async (filePath: string) => {
-    const fileData = await fs.readFile(filePath, 'utf-8');
+    const fileData = await fs.readFile(filePath, "utf-8");
 
     const { data: books } = Papa.parse(fileData, {
       header: true,
       skipEmptyLines: true,
     });
-  
 
     const formattedBooks = books.map(formatBookData);
 
-    return adminRepo.batchCreateBooks(formattedBooks as Prisma.BookCreateInput[]);
+    return adminRepo.batchCreateBooks(
+      formattedBooks as Prisma.BookCreateInput[]
+    );
   };
 
   getBorrowRequests = async (status: BorrowStatus) => {
     return adminRepo.getBorrowRequests(status);
-  }
+  };
 
   getBorrowRequest = async (id: string) => {
     return adminRepo.getBorrowRequest(id);
-  }
+  };
 
-  updateBorrowRequest = async (id: string, status: BorrowStatus, rejectionReason?: string) => {
+  updateBorrowRequest = async (
+    id: string,
+    status: BorrowStatus,
+    rejectionReason?: string
+  ) => {
     return adminRepo.updateBorrowRequestStatus(id, status, rejectionReason);
-  }
+  };
 
   getAllActivities = async () => {
-    return adminRepo.getAllActivities()
-  }
+    return adminRepo.getAllActivities();
+  };
 }
