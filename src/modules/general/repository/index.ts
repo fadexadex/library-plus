@@ -69,6 +69,15 @@ export class GeneralRepository {
     });
   }
 
+  async createPurchaseNotifications(
+    purchase: { userId: string; book: { title: string }; purchaseId: string; quantity: number }
+  ) {
+    const userMessage = `Your purchase of ${purchase.quantity} copies of the book "${purchase.book.title}" has been confirmed. Your purchase ID is ${purchase.purchaseId}.`;
+    const adminMessage = `A new purchase of ${purchase.quantity} copies of the book "${purchase.book.title}" has been made. Purchase ID: ${purchase.purchaseId}.`;
+
+    await this.createNotifications(purchase.userId, userMessage, adminMessage);
+  }
+
   async createBorrowRequestNotifications(
     borrowRequest: BorrowedBook & { book: { title: string } }
   ) {

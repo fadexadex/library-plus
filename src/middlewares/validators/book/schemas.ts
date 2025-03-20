@@ -44,7 +44,6 @@ export const statusSchema = Joi.object({
 
 export const BookPurchaseSchema = Joi.object({
   bookId: Joi.string().guid().required(),
-  userId: Joi.string().guid().required(),
   title: Joi.string().required(),
   price: Joi.number().required(),
   quantity: Joi.number().required(),

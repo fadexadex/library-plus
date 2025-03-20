@@ -101,11 +101,21 @@ export class GeneralService {
   }
 
   async handleWebhookConfirmation(userId: string, bookId: string, amount: number, quantity: number) {
-    return await generalRepo.createPurchase({
+    const purchase = await generalRepo.createPurchase({
       bookId,
       quantity,
       amount,
       userId,
     });
+
+    await generalRepo.createPurchaseNotifications({
+      userId,
+      book: purchase.book,
+      purchaseId: purchase.purchaseId,
+      quantity,
+    });
+
+    return purchase;
   }
+     
 }
