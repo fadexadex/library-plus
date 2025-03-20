@@ -75,10 +75,11 @@ export class GeneralService {
     quantity: number
   ) {
     return await stripe.checkout.sessions.create({
-      payment_intent_data: { 
+      payment_intent_data: {
         metadata: {
           bookId,
           userId,
+          quantity
         },
       },
       line_items: [
@@ -99,5 +100,5 @@ export class GeneralService {
     });
   }
 
-  
+  async handleWebhookConfirmation(userId: string, bookId: string) {}
 }

@@ -84,10 +84,11 @@ export class GeneralController {
   handleWebhook = async (req: Request, res: Response, next: NextFunction) => {
     const {
       data: {
-        object: { metadata },
+        object: { amount, amount_details, metadata },
       },
     } = req.body;
-    console.log(metadata);
+    const { bookId, userId } = metadata;
+
     res.status(StatusCodes.OK).json({ received: true });
   };
 }
