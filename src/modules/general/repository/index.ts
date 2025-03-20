@@ -164,7 +164,7 @@ export class GeneralRepository {
           },
         },
         quantity,
-        price: amount, 
+        price: Number(amount), 
       },
       include:{
         user:{
