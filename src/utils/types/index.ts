@@ -18,3 +18,10 @@ export type IPayload = {
   email: string;
   role: string;
 }
+
+export type ICreatePurchase = {
+  bookId: string;
+  quantity: number;
+  amount: number;
+  userId: string;
+}

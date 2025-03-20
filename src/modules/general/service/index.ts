@@ -100,5 +100,12 @@ export class GeneralService {
     });
   }
 
-  async handleWebhookConfirmation(userId: string, bookId: string, amount: number, quantity: number) {}
+  async handleWebhookConfirmation(userId: string, bookId: string, amount: number, quantity: number) {
+    return await generalRepo.createPurchase({
+      bookId,
+      quantity,
+      amount,
+      userId,
+    });
+  }
 }

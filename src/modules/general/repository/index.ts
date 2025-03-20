@@ -1,3 +1,4 @@
+import { ICreatePurchase } from "utils/types";
 import { prisma } from "../../../utils/db";
 import { BorrowedBook, BorrowStatus } from "@prisma/client";
 
@@ -145,6 +146,38 @@ export class GeneralRepository {
       orderBy: {
         time: "desc",
       },
+    });
+  }
+
+  async createPurchase(data: ICreatePurchase) {
+    const { bookId, quantity, amount, userId } = data;
+    return await prisma.purchase.create({
+      data: {
+        user:{
+          connect: {
+            userId,
+          },
+        },
+        book: {
+          connect: {
+            bookId,
+          },
+        },
+        quantity,
+        price: amount, 
+      },
+      include:{
+        user:{
+          select:{
+            email: true,
+          }
+        },
+        book:{
+          select:{
+            title: true,
+          }
+        }
+      }
     });
   }
 }

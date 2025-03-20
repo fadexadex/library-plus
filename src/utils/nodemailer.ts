@@ -134,6 +134,28 @@ class EmailService {
 
     return Promise.all(emailPromises);
   }
+
+  async notifyUserAboutPurchaseConfirmation(
+    userEmail: string,
+    bookTitle: string,
+    purchaseId: string,
+    quantity: number
+  ) {
+    const subject = "Purchase Confirmation";
+    const html = `
+      <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+        <h2 style="color: #4CAF50;">Purchase Confirmation</h2>
+        <p>Dear User,</p>
+        <p>Your payment for <strong>${quantity}</strong> copie(s) of the book titled <strong>${bookTitle}</strong> was successful.</p>
+        <p>Your purchase ID is <strong>${purchaseId}</strong>. Please show this ID whenever you come to the store to collect your book(s).</p>
+        <p>Thank you for your purchase!</p>
+        <p>Best regards,</p>
+        <p><strong>Library System</strong></p>
+      </div>
+    `;
+
+    await this.sendMail(userEmail, subject, undefined, html);
+  }
 }
 
 export default EmailService;

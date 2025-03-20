@@ -1,8 +1,10 @@
 import { GeneralService } from "../service";
 import { Request, Response, NextFunction } from "express";
 import { StatusCodes } from "http-status-codes";
+import EmailService from "../../../utils/nodemailer";
 
 const generalService = new GeneralService();
+const emailService = new EmailService();
 
 export class GeneralController {
   getAllBooks = async (req: Request, res: Response, next: NextFunction) => {
@@ -84,11 +86,36 @@ export class GeneralController {
   handleWebhook = async (req: Request, res: Response, next: NextFunction) => {
     const {
       data: {
-        object: { amount, amount_details, metadata },
+        object: { amount, metadata },
       },
     } = req.body;
-    console.log(amount, amount_details, metadata);
-    const { bookId, userId } = metadata;
+    const { bookId, userId, quantity } = metadata;
+    setImmediate(async () => {
+      try {
+        const purchase = await generalService.handleWebhookConfirmation(
+          userId,
+          bookId,
+          amount,
+          quantity
+        );
+
+        console.log("Purchase created successfully");
+        const email = purchase.user.email;
+        const bookTitle = purchase.book.title;
+        const { purchaseId } = purchase;
+
+        await emailService.notifyUserAboutPurchaseConfirmation(
+          email,
+          bookTitle,
+          purchaseId,
+          quantity
+        );
+
+        console.log("Purchase finalized successfully");
+      } catch (error) {
+        console.error("Failed Finalize purchase", error);
+      }
+    });
 
     res.status(StatusCodes.OK).json({ received: true });
   };
