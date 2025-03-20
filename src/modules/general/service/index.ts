@@ -100,5 +100,5 @@ export class GeneralService {
     });
   }
 
-  async handleWebhookConfirmation(userId: string, bookId: string) {}
+  async handleWebhookConfirmation(userId: string, bookId: string, amount: number, quantity: number) {}
 }

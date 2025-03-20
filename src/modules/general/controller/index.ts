@@ -87,6 +87,7 @@ export class GeneralController {
         object: { amount, amount_details, metadata },
       },
     } = req.body;
+    console.log(amount, amount_details, metadata);
     const { bookId, userId } = metadata;
 
     res.status(StatusCodes.OK).json({ received: true });
