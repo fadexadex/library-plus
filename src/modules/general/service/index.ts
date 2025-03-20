@@ -1,7 +1,6 @@
 import { GeneralRepository } from "../repository";
 import { BorrowedBook, BorrowStatus } from "@prisma/client";
-const stripe = require("stripe")("sk_test_BQokikJOvBiI2HlWgH4olfQ2");
-
+const stripe = require("stripe")(process.env.STRIPE_TEST_KEY);
 const generalRepo = new GeneralRepository();
 
 export class GeneralService {
