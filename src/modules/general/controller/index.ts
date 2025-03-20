@@ -73,7 +73,7 @@ export class GeneralController {
         userId,
         title,
         price,
-        quantity
+        parseInt(quantity)
       );
       res
         .status(StatusCodes.OK)
