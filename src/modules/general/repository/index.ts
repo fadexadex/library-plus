@@ -151,6 +151,7 @@ export class GeneralRepository {
 
   async createPurchase(data: ICreatePurchase) {
     const { bookId, quantity, amount, userId } = data;
+    console.log(data);
     return await prisma.purchase.create({
       data: {
         user:{
