@@ -32,10 +32,20 @@ export const updateBookSchema = Joi.object({
 });
 
 export const statusSchema = Joi.object({
-  status: Joi.string().valid(...Object.values(BorrowStatus)).required(),
-  rejectionReason: Joi.string().when('status', {
+  status: Joi.string()
+    .valid(...Object.values(BorrowStatus))
+    .required(),
+  rejectionReason: Joi.string().when("status", {
     is: BorrowStatus.REJECTED,
     then: Joi.string().required(),
     otherwise: Joi.string().optional().allow(null),
   }),
+});
+
+export const BookPurchaseSchema = Joi.object({
+  bookId: Joi.string().guid().required(),
+  userId: Joi.string().guid().required(),
+  title: Joi.string().required(),
+  price: Joi.number().required(),
+  quantity: Joi.number().required(),
 });

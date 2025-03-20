@@ -1,4 +1,3 @@
-
 import { Router } from "express";
 import { authGuard } from "../../middlewares";
 import { GeneralController } from "../../modules/general/controller";
@@ -9,7 +8,6 @@ const router = Router();
 const generalController = new GeneralController();
 const bookValidator = new BookValidator();
 
-
 router.get("/books", generalController.getAllBooks);
 router.get(
   "/books/:id",
@@ -17,9 +15,17 @@ router.get(
   generalController.getBookById
 );
 
-router.get("/search", generalController.searchBooks); 
+router.get("/search", generalController.searchBooks);
+
+router.post(
+  "/purchase/initiate",
+  authGuard,
+  bookValidator.validateBookPurchaseBody,
+  generalController.initiateBookPurchase
+);
+
+router.post("/webkhook", )
 
 router.get("/notifications", authGuard, generalController.getNotifications);
-
 
 export default router;

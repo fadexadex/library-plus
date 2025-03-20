@@ -32,7 +32,11 @@ export class GeneralController {
     }
   };
 
-  getNotifications = async (req: Request, res: Response, next: NextFunction) => {
+  getNotifications = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
     try {
       const { userId } = req.user;
       const notifications = await generalService.getNotfications(userId);
@@ -41,7 +45,7 @@ export class GeneralController {
     } catch (error) {
       next(error);
     }
-  }
+  };
   searchBooks = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const query = req.query.q as string;
@@ -52,5 +56,33 @@ export class GeneralController {
     } catch (error) {
       next(error);
     }
+  };
+
+  initiateBookPurchase = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const { bookId, title, price, quantity } = req.body;
+      const { userId } = req.user;
+      const { url } = await generalService.initiateBookPurchase(
+        bookId,
+        userId,
+        title,
+        price,
+        quantity
+      );
+      res
+        .status(StatusCodes.OK)
+        .json({ message: "Payment initiation successful", url });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  handleWebhook = async (req: Request, res: Response, next: NextFunction) => {
+    const { event } = req.body;
+    
   };
 }

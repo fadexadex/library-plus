@@ -91,6 +91,7 @@ model Purchase {
   purchaseId    String   @id @default(uuid())
   userId        String 
   bookId        String
+  quantity      Int
   transactionId String?
   price         Decimal
   createdAt     DateTime @default(now())

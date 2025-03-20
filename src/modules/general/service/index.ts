@@ -1,5 +1,6 @@
 import { GeneralRepository } from "../repository";
 import { BorrowedBook, BorrowStatus } from "@prisma/client";
+const stripe = require("stripe")("sk_test_BQokikJOvBiI2HlWgH4olfQ2");
 
 const generalRepo = new GeneralRepository();
 
@@ -66,4 +67,36 @@ export class GeneralService {
   async getNotfications(userId: string) {
     return await generalRepo.getNotfications(userId);
   }
+
+  async initiateBookPurchase(
+    bookId: string,
+    userId: string,
+    title: string,
+    price: number,
+    quantity: number
+  ) {
+    return await stripe.checkout.sessions.create({
+      line_items: [
+        {
+          price_data: {
+            currency: "usd",
+            product_data: {
+              name: title,
+            },
+            unit_amount: price * 100,
+          },
+          quantity,
+        },
+      ],
+      mode: "payment",
+      success_url: "http://localhost:3000/complete",
+      cancel_url: "http://localhost:3000/cancel",
+      metadata: {
+        bookId,
+        userId,
+      },
+    });
+  }
+
+  
 }
