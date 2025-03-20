@@ -82,7 +82,8 @@ export class GeneralController {
   };
 
   handleWebhook = async (req: Request, res: Response, next: NextFunction) => {
-    const { event } = req.body;
-    
+    console.log("Webhook received");
+    console.log(req.body)
+    res.status(StatusCodes.OK).json({received: true});
   };
 }

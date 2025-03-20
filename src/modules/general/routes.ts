@@ -24,7 +24,7 @@ router.post(
   generalController.initiateBookPurchase
 );
 
-router.post("/webkhook", )
+router.post("/webhook",generalController.handleWebhook )
 
 router.get("/notifications", authGuard, generalController.getNotifications);
 
