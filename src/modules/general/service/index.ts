@@ -75,6 +75,12 @@ export class GeneralService {
     quantity: number
   ) {
     return await stripe.checkout.sessions.create({
+      payment_intent_data: { 
+        metadata: {
+          bookId,
+          userId,
+        },
+      },
       line_items: [
         {
           price_data: {
@@ -90,10 +96,6 @@ export class GeneralService {
       mode: "payment",
       success_url: "http://localhost:3000/complete",
       cancel_url: "http://localhost:3000/cancel",
-      metadata: {
-        bookId,
-        userId,
-      },
     });
   }
 
