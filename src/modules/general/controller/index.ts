@@ -73,7 +73,7 @@ export class GeneralController {
         userId,
         title,
         price,
-        parseInt(quantity)
+        quantity
       );
       res
         .status(StatusCodes.OK)
@@ -96,7 +96,7 @@ export class GeneralController {
           userId,
           bookId,
           amount,
-          quantity
+          parseInt(quantity)
         );
 
         console.log("Purchase created successfully");
