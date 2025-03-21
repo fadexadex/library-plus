@@ -67,6 +67,19 @@ export class UserRepository {
     });
   }
 
+  async getUserPurchases(userId: string) {
+    return prisma.purchase.findMany({
+      where: { userId },
+      include: {
+        book: {
+          select: {
+            title: true,
+          },
+        },
+      },
+    });
+  }
+
   async submitReturnRequest(userId: string, borrowId: string) {
 
     const borrowRequest = await prisma.borrowedBook.findFirst({

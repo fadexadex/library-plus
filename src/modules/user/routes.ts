@@ -38,4 +38,6 @@ router.get("/notifications", generalController.getNotifications);
 
 router.get("/activities", userController.getUserActivities);
 
+router.get("/purchases", userController.getUserPurchases);
+
 export default router;

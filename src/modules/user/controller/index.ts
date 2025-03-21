@@ -81,8 +81,7 @@ export class UserController {
         message:
           "Book return request submitted successfully, awaiting admin approval",
       });
-    }
-    catch (error) {
+    } catch (error) {
       next(error);
     }
   }
@@ -120,6 +119,21 @@ export class UserController {
       const activities = await userService.getUserActivities(userId);
 
       res.status(StatusCodes.OK).json(activities);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async getUserPurchases(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { userId } = req.user;
+      const purchases = await userService.getUserPurchases(userId);
+      if (!purchases.length) {
+        return res.status(StatusCodes.NOT_FOUND).json({
+          message: "No purchases found",
+        });
+      }
+      res.status(StatusCodes.OK).json(purchases);
     } catch (error) {
       next(error);
     }

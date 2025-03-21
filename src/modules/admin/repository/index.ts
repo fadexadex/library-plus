@@ -138,4 +138,23 @@ export class AdminRepository {
       },
     });
   }
+
+  getAllPurchases() {
+    return prisma.purchase.findMany({
+      include: {
+        user: {
+          select: {
+            firstName: true,
+            lastName: true,
+          },
+        },
+        book: {
+          select: {
+            title: true,
+          },
+        },
+      },
+    });
+  }
+
 }

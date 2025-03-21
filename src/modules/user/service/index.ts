@@ -22,4 +22,8 @@ export class UserService {
   async getUserActivities(userId: string) {
     return await userRepo.getUserActivities(userId);
   }
+
+  async getUserPurchases(userId: string) {
+    return await userRepo.getUserPurchases(userId);
+  }
 }

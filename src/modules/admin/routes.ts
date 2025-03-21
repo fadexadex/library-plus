@@ -73,4 +73,7 @@ router.get("/notifications", generalController.getNotifications);
 
 router.get("/activities", adminController.getAllActivities);
 
+router.get("/purchases", adminController.getAllPurchases);
+
+
 export default router;

@@ -177,4 +177,13 @@ export class AdminController {
       next(error);
     }
   };
+
+  getAllPurchases = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const purchases = await adminService.getAllPurchases();
+      res.status(StatusCodes.OK).json(purchases);
+    } catch (error) {
+      next(error);
+    }
+  };
 }

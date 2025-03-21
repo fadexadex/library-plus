@@ -64,4 +64,8 @@ export class AdminService {
   getAllActivities = async () => {
     return adminRepo.getAllActivities();
   };
+
+  getAllPurchases = async () => {
+    return adminRepo.getAllPurchases();
+  }
 }
