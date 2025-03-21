@@ -3,10 +3,21 @@ import { BorrowStatus, Prisma } from "@prisma/client";
 import fs from "fs/promises";
 import Papa from "papaparse";
 import { formatBookData } from "../../../utils/formatBookData";
+import { processQuery, fetchDataFromDB, formatAIResponse  } from "../../../utils/query.engine";
 
 const adminRepo = new AdminRepository();
 
 export class AdminService {
+
+  askAI= async(query: string)=>{
+
+    const decision = await processQuery(query);
+    if (!decision.needsDatabaseQuery) return decision?.explanation;
+
+    const data = await fetchDataFromDB(decision.sqlQuery);
+    return await formatAIResponse(query, data);
+  }
+
   createBook = async (data: Prisma.BookCreateInput) => {
     return adminRepo.createBook(data);
   };

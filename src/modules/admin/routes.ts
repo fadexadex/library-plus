@@ -9,14 +9,18 @@ import {
 import { GeneralController } from "../../modules/general/controller";
 import { uploadCSV, uploadImage } from "../../utils/multer";
 import { BookValidator } from "../../middlewares";
+import { AdminValidator } from "../../middlewares/validators/admin/validators";
 
 const router = Router();
 
 const adminController = new AdminController();
 const generalController = new GeneralController();
 const bookValidator = new BookValidator();
+const adminValidator = new AdminValidator();
 
 router.use(authGuard, adminGuard);
+
+router.post("/ask-ai",adminValidator.validateChatQuery, adminController.askAI);
 
 router.post(
   "/books/create",

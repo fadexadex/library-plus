@@ -5,10 +5,9 @@ import authRoutes from "./modules/auth/routes";
 import adminRoutes from "./modules/admin/routes";
 import userRoutes from "./modules/user/routes";
 import genenralRoutes from "./modules/general/routes";
-import cors from "cors"
+import cors from "cors";
 
-
-dotenv.config();
+dotenv.config({ path: ".env" });
 
 export class Server {
   private app: express.Application;
@@ -25,7 +24,7 @@ export class Server {
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
     this.app.use(cors());
-    this.app.use(errorHandler); 
+    this.app.use(errorHandler);
   }
 
   private setUpRoutes() {

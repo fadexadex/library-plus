@@ -21,11 +21,14 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
+    "groq-sdk": "^0.17.0",
     "http-status-codes": "^2.3.0",
     "mongoose": "^8.5.1",
     "multer": "^1.4.5-lts.1",
     "nodemailer": "^6.10.0",
+    "openai": "^4.89.0",
     "papaparse": "^5.5.2",
+    "pg": "^8.14.1",
     "stripe": "^17.7.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.5.4"
@@ -38,6 +41,7 @@
     "@types/multer": "^1.4.12",
     "@types/nodemailer": "^6.4.17",
     "@types/papaparse": "^5.3.15",
+    "@types/pg": "^8.11.11",
     "joi": "^17.13.3",
     "jsonwebtoken": "^9.0.2"
   }

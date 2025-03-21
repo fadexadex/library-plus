@@ -13,6 +13,16 @@ const emailService = new EmailService();
 const generalService = new GeneralService();
 
 export class AdminController {
+  askAI = async (req: Request, res: Response, next: NextFunction) => {
+    const { query } = req.body;
+    try {
+      const response = await adminService.askAI(query);
+      res.status(StatusCodes.OK).json({ response });
+    } catch (error) {
+      next(error);
+    }
+  };
+
   createBook = async (req: Request, res: Response, next: NextFunction) => {
     try {
       req.body.coverImage = await uploadImageToCloudinary(req.file.path);
