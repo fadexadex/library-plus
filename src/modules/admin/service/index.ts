@@ -68,4 +68,8 @@ export class AdminService {
   getAllPurchases = async () => {
     return adminRepo.getAllPurchases();
   }
+
+  getUserCount = async () => {
+    return adminRepo.getUserCount();
+  }
 }

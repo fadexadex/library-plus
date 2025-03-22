@@ -186,4 +186,13 @@ export class AdminController {
       next(error);
     }
   };
+  
+  getUserCount = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const count = await adminService.getUserCount();
+      res.status(StatusCodes.OK).json({ count });
+    } catch (error) {
+      next(error);
+    }
+  }
 }

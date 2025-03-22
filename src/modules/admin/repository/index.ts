@@ -157,4 +157,7 @@ export class AdminRepository {
     });
   }
 
+  getUserCount() {
+    return prisma.user.count();
+  }
 }

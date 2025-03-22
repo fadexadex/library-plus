@@ -76,4 +76,7 @@ router.get("/activities", adminController.getAllActivities);
 router.get("/purchases", adminController.getAllPurchases);
 
 
+router.get("/user/count", adminController.getUserCount);
+
+
 export default router;
