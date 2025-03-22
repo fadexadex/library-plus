@@ -67,6 +67,10 @@ export class GeneralService {
     return await generalRepo.getNotfications(userId);
   }
 
+  async markNotificationAsRead(notificationId: string, userId: string) {
+    return await generalRepo.markNotificationAsRead(notificationId, userId);
+  }
+
   async initiateBookPurchase(
     bookId: string,
     userId: string,

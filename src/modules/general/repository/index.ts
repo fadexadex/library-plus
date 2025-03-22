@@ -158,6 +158,18 @@ export class GeneralRepository {
     });
   }
 
+  async markNotificationAsRead(notificationId: string, userId: string) {
+    return await prisma.notification.update({
+      where: {
+        notificationId,
+        userId
+      },
+      data: {
+        read: true,
+      },
+    });
+  }
+
   async createPurchase(data: ICreatePurchase) {
     const { bookId, quantity, amount, userId } = data;
     console.log(data);
@@ -190,4 +202,5 @@ export class GeneralRepository {
       }
     });
   }
+
 }

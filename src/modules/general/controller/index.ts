@@ -48,6 +48,24 @@ export class GeneralController {
       next(error);
     }
   };
+
+  markNotificationAsRead = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const { notificationId } = req.params;
+      const { userId } = req.user;
+      await generalService.markNotificationAsRead(notificationId, userId);
+
+      res.status(StatusCodes.OK).json({ message: "Notification marked as read" });
+    } catch (error) {
+      next(error);
+    }
+  };
+  
+
   searchBooks = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const query = req.query.q as string;

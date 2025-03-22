@@ -24,8 +24,14 @@ router.post(
   generalController.initiateBookPurchase
 );
 
-router.post("/webhook",generalController.handleWebhook )
+router.post("/webhook", generalController.handleWebhook);
 
 router.get("/notifications", authGuard, generalController.getNotifications);
+
+router.post(
+  "/notifications/:notificationId/mark-as-read",
+  authGuard,
+  generalController.markNotificationAsRead
+);
 
 export default router;
