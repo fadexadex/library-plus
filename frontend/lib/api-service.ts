@@ -13,7 +13,7 @@ export interface Book {
   stockStatus: "IN_STOCK" | "OUT_OF_STOCK"
   createdAt: string
   updatedAt: string
-}
+}   
 
 export interface BorrowRequest {
   borrowId: string
