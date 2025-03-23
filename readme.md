@@ -11,6 +11,8 @@ LibraryPlus is an advanced library management system designed for schools, unive
 - **User & Admin Account:**
   - **Email:** johndoe200@gmail.com
   - **Password:** ExplicitCyclo
+- **Sample csv file for batch create:**
+  - [File Link](https://drive.google.com/file/d/1qO72ehNSxWoOjhykCsfIJxzrjPBRRAlD/view?usp=drivesdk)
 
 ## Why Choose LibraryPlus?
 
