@@ -5,7 +5,7 @@
 LibraryPlus is an advanced library management system designed for schools, universities, and public libraries. It streamlines book discovery, borrowing, and purchasing, providing an intuitive dark-themed interface for both users and administrators.
 
 ### Live Demo
-[Live Frontend URL](#) | [Demo Video](#)
+[Live URL](https://v0-bookmanagementsystem-3uv9mgzyz-daniels-projects-ce629cd9.vercel.app) | [Demo Video](https://www.loom.com/share/c7c50a14e6aa49509b9ebf2f5654075e)
 
 ### Demo Credentials
 - **User & Admin Account:**
